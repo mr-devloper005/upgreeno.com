@@ -1,10 +1,10 @@
 export const siteIdentity = {
   code: process.env.NEXT_PUBLIC_SITE_CODE || 'uukv3n8eix',
-  name: process.env.NEXT_PUBLIC_SITE_NAME || 'Upgreeno',
-  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Business Listing platform',
+  name: process.env.NEXT_PUBLIC_SITE_NAME || 'upgreeno',
+  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Curated business listings',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-    'A business listing platform for discovering services, companies, and local opportunities with structured browsing.',
+    'A polished directory for brands, services, and local companies with clear comparison, trusted presentation, and premium browsing flow.',
   domain: process.env.NEXT_PUBLIC_SITE_DOMAIN || 'upgreeno.com',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://upgreeno.com',
   ogImage: process.env.NEXT_PUBLIC_SITE_OG_IMAGE || '/og-default.png',

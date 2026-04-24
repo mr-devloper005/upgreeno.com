@@ -23,7 +23,7 @@ export default function AboutPage() {
   return (
     <PageShell
       title={`About ${SITE_CONFIG.name}`}
-      description={`${SITE_CONFIG.name} is a modern platform for creators, communities, and curated business discovery.`}
+      description={`${SITE_CONFIG.name} is a polished business directory for brands, services, and trusted local discovery.`}
       actions={
         <>
           <Button variant="outline" asChild>
@@ -40,11 +40,11 @@ export default function AboutPage() {
           <CardContent className="space-y-4 p-6">
             <Badge variant="secondary">Our Story</Badge>
             <h2 className="text-2xl font-semibold text-foreground">
-              A single home for knowledge, discovery, and community.
+              A single home for business discovery, brand profiles, and structured listings.
             </h2>
             <p className="text-sm text-muted-foreground">
-              {SITE_CONFIG.name} brings together publishing, listings, and social bookmarking so teams can move faster
-              and keep their best resources close.
+              {SITE_CONFIG.name} brings together business listings, profiles, and supporting routes so teams can move
+              faster and keep high-trust information close.
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               {highlights.map((item) => (

@@ -82,9 +82,8 @@ export const fetchTaskPostBySlug = async (task: TaskKey, slug: string) => {
     // fall through to mock data
   }
 
-  return allowMockFallback
-    ? getMockPostsForTask(task).find((post) => post.slug === slug) || null
-    : null;
+  const mockMatch = getMockPostsForTask(task).find((post) => post.slug === slug) || null;
+  return allowMockFallback || mockMatch ? mockMatch : null;
 };
 
 export const buildPostUrl = (task: TaskKey, slug: string) => {

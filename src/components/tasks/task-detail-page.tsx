@@ -141,6 +141,7 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
   }
 
   const content = getContent(post);
+  const contentAny = content as Record<string, unknown>;
   const isClassified = task === "classified";
   const isArticle = task === "article";
   const category = content.category || post.tags?.[0] || taskConfig?.label || task;
@@ -164,6 +165,21 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
     : "";
   const postTags = Array.isArray(post.tags) ? post.tags.filter((tag) => typeof tag === "string") : [];
   const location = content.address || content.location;
+  const detailFacts = [
+    typeof contentAny.website === "string" && contentAny.website.trim() ? { label: "Website", value: contentAny.website } : null,
+    typeof contentAny.phone === "string" && contentAny.phone.trim() ? { label: "Phone", value: contentAny.phone } : null,
+    typeof contentAny.email === "string" && contentAny.email.trim() ? { label: "Email", value: contentAny.email } : null,
+    typeof contentAny.founded === "string" || typeof contentAny.founded === "number" ? { label: "Founded", value: String(contentAny.founded) } : null,
+    typeof contentAny.teamSize === "string" || typeof contentAny.teamSize === "number" ? { label: "Team size", value: String(contentAny.teamSize) } : null,
+    typeof contentAny.priceRange === "string" && contentAny.priceRange.trim() ? { label: "Price range", value: contentAny.priceRange } : null,
+    typeof contentAny.hours === "string" && contentAny.hours.trim() ? { label: "Hours", value: contentAny.hours } : null,
+    typeof contentAny.rating === "string" || typeof contentAny.rating === "number" ? { label: "Rating", value: String(contentAny.rating) } : null,
+    typeof contentAny.reviewsCount === "string" || typeof contentAny.reviewsCount === "number" ? { label: "Reviews", value: String(contentAny.reviewsCount) } : null,
+  ].filter((item): item is { label: string; value: string } => Boolean(item));
+  const specialtyChips = [
+    ...(Array.isArray(contentAny.specialties) ? contentAny.specialties : []),
+    ...(Array.isArray(contentAny.services) ? contentAny.services : []),
+  ].filter((item): item is string => typeof item === "string");
   const images = getImageUrls(post, content);
   const mapEmbedUrl = buildMapEmbedUrl(content.latitude, content.longitude, location);
   const isBookmark = task === "sbm" || task === "social";
@@ -390,6 +406,19 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
               </div>
             ) : null}
 
+            {specialtyChips.length && !isArticle ? (
+              <div className={cn("mt-8 rounded-2xl border border-border bg-card p-6", isClassified ? "mx-auto w-full max-w-4xl" : "")}>
+                <h2 className="text-lg font-semibold text-foreground">Specialties</h2>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {specialtyChips.slice(0, 8).map((item) => (
+                    <span key={item} className="rounded-full border border-border bg-background px-3 py-1 text-sm text-foreground">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
             {isClassified && mapEmbedUrl ? (
               <div className="mx-auto w-full max-w-4xl rounded-2xl border border-border bg-card p-4">
                 <p className="text-sm font-semibold text-foreground">Location map</p>
@@ -448,6 +477,16 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                     </div>
                   )}
                 </div>
+                {detailFacts.length ? (
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {detailFacts.map((item) => (
+                      <div key={item.label} className="rounded-2xl border border-border bg-background p-4">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">{item.label}</p>
+                        <p className="mt-2 text-sm font-medium text-foreground">{item.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
               {content.website ? (
                 <Button className="mt-5 w-full" asChild>
                   <a href={content.website} target="_blank" rel="noreferrer">

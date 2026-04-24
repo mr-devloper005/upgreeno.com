@@ -21,7 +21,7 @@ export const SITE_THEME = defineSiteTheme({
     listing: 'listing-elevated',
     article: 'editorial-feature',
     image: 'studio-panel',
-    profile: 'studio-panel',
+    profile: 'catalog-grid',
     classified: 'catalog-grid',
     pdf: 'catalog-grid',
     sbm: 'editorial-feature',

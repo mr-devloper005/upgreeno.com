@@ -68,7 +68,7 @@ export const DEFAULT_SITE_THEME: SiteTheme = {
     listing: 'listing-elevated',
     article: 'editorial-feature',
     image: 'studio-panel',
-    profile: 'studio-panel',
+    profile: 'catalog-grid',
     classified: 'catalog-grid',
     pdf: 'catalog-grid',
     sbm: 'editorial-feature',

@@ -54,8 +54,9 @@ export function TaskListClient({ task, initialPosts, category }: Props) {
 
   if (!merged.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">
-        No posts yet for this section.
+      <div className="rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white/85 p-10 text-center shadow-[0_18px_50px_rgba(16,40,58,0.06)]">
+        <div className="brand-chip mx-auto mb-4 w-fit">Empty section</div>
+        <p className="text-sm text-[#586779]">No posts yet for this section.</p>
       </div>
     );
   }
