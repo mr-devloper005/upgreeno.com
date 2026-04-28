@@ -129,10 +129,10 @@ export function Navbar() {
           </div>
 
           <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
-            <div className={cn('flex w-full max-w-xl items-center gap-3 rounded-full px-4 py-3', palette.search)}>
+            <Link href="/search" className={cn('flex w-full max-w-xl items-center gap-3 rounded-full px-4 py-3 transition-colors hover:bg-[#f3e7d6]', palette.search)}>
               <Search className="h-4 w-4" />
               <span className="text-sm">Search businesses, brands, and locations</span>
-            </div>
+            </Link>
           </div>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
@@ -161,10 +161,10 @@ export function Navbar() {
         {isMobileMenuOpen && (
           <div className={palette.mobile}>
             <div className="space-y-2 px-4 py-4">
-              <div className={cn('mb-3 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium', palette.search)}>
+              <Link href="/search" onClick={() => setIsMobileMenuOpen(false)} className={cn('mb-3 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition-colors hover:bg-[#f3e7d6]', palette.search)}>
                 <Search className="h-4 w-4" />
                 Find businesses, brands, and services
-              </div>
+              </Link>
               {featuredTasks.map((task) => {
                 const isActive = pathname.startsWith(task.route)
                 return (
@@ -336,12 +336,13 @@ export function Navbar() {
               <Search className="h-4 w-4" />
               Search the site
             </Link>
-            {navigation.map((item) => {
-              const isActive = pathname.startsWith(item.href)
+            {navigation.map((task) => {
+              const Icon = taskIcons[task.key] || LayoutGrid
+              const isActive = pathname.startsWith(task.route)
               return (
-                <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={cn('flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors', isActive ? style.active : style.idle)}>
-                  <item.icon className="h-5 w-5" />
-                  {item.name}
+                <Link key={task.key} href={task.route} onClick={() => setIsMobileMenuOpen(false)} className={cn('flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors', isActive ? style.active : style.idle)}>
+                  <Icon className="h-5 w-5" />
+                  {task.label}
                 </Link>
               )
             })}

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Globe, Mail, MapPin, Phone, ShieldCheck, Tag } from 'lucide-react'
+import { ArrowRight, Globe, Mail, MapPin, Phone, ShieldCheck, Tag, Star, MessageSquare, Image as ImageIcon, CheckCircle2, Clock } from 'lucide-react'
 import { ContentImage } from '@/components/shared/content-image'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { TaskPostCard } from '@/components/shared/task-post-card'
@@ -45,6 +45,7 @@ export function DirectoryTaskDetailPage({
     ...(Array.isArray(content.specialties) ? content.specialties : []),
     ...(Array.isArray(content.services) ? content.services : []),
   ].filter((item): item is string => typeof item === 'string')
+  const offerings = specialtyChips.length > 0 ? specialtyChips.slice(0, 6) : ['Premium Service', 'Expert Team', 'Fast Delivery', 'Quality Guarantee', '24/7 Support', 'Custom Solutions']
   const schemaPayload = {
     '@context': 'https://schema.org',
     '@type': task === 'profile' ? 'Organization' : 'LocalBusiness',
@@ -66,78 +67,92 @@ export function DirectoryTaskDetailPage({
           Back to {taskLabel}
         </Link>
 
-        <section className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-start">
-          <div>
-            <div className="overflow-hidden rounded-[2.2rem] border border-[rgba(16,40,58,0.12)] bg-white shadow-[0_24px_70px_rgba(16,40,58,0.08)]">
-              <div className="relative h-[420px] overflow-hidden bg-[#eef3f6]">
-                <ContentImage src={images[0]} alt={post.title} fill className="object-cover" />
-                <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#003049] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fffaf4]">
-                    <Tag className="h-3.5 w-3.5" />
-                    {category}
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#10283a] shadow-sm">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                    Verified
-                  </span>
-                </div>
-              </div>
-              {images.length > 1 ? (
-                <div className="grid grid-cols-4 gap-3 p-4">
-                  {images.slice(1, 5).map((image) => (
-                    <div key={image} className="relative h-24 overflow-hidden rounded-2xl border border-[rgba(16,40,58,0.12)] bg-[#f7f3ec]">
-                      <ContentImage src={image} alt={post.title} fill className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-
-            <div className="mt-8 rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white p-7 shadow-[0_20px_60px_rgba(16,40,58,0.06)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">About this {task}</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Structured details instead of a generic content block.</h2>
-              <p className="mt-4 text-sm leading-8 text-[#586779]">{description}</p>
-              {highlights.length ? (
-                <div className="mt-6 grid gap-3 md:grid-cols-2">
-                  {highlights.slice(0, 4).map((item) => (
-                    <div key={item} className="rounded-[1.4rem] border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-4 text-sm text-[#10283a]">
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-              {specialtyChips.length ? (
-                <div className="mt-6 rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white/88 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Specialties</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {specialtyChips.slice(0, 8).map((item) => (
-                      <span key={item} className="rounded-full border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-3 py-1 text-sm text-[#10283a]">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="space-y-6">
-              <div className="rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white p-7 shadow-[0_24px_60px_rgba(16,40,58,0.08)]">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">{category || taskLabel}</p>
-                  <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em]">{post.title}</h1>
-                </div>
-                <span className="inline-flex items-center gap-2 rounded-full bg-[#003049] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white">
-                  <ShieldCheck className="h-3.5 w-3.5" /> Verified
+        {/* Hero Section */}
+        <section className="mb-12">
+          <div className="overflow-hidden rounded-[2.2rem] border border-[rgba(16,40,58,0.12)] bg-white shadow-[0_24px_70px_rgba(16,40,58,0.08)]">
+            <div className="relative h-[420px] overflow-hidden bg-[#eef3f6]">
+              <ContentImage src={images[0]} alt={post.title} fill className="object-cover" />
+              <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#003049] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fffaf4]">
+                  <Tag className="h-3.5 w-3.5" />
+                  {category}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#10283a] shadow-sm">
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                  Verified
                 </span>
               </div>
+            </div>
+          </div>
+        </section>
 
-              <div className="mt-6 grid gap-3">
-                {location ? <div className="flex items-center gap-3 rounded-2xl border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-3 text-sm text-[#586779]"><MapPin className="h-4 w-4" /> {location}</div> : null}
-                {phone ? <div className="flex items-center gap-3 rounded-2xl border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-3 text-sm text-[#586779]"><Phone className="h-4 w-4" /> {phone}</div> : null}
-                {email ? <div className="flex items-center gap-3 rounded-2xl border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-3 text-sm text-[#586779]"><Mail className="h-4 w-4" /> {email}</div> : null}
-                {website ? <div className="flex items-center gap-3 rounded-2xl border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-3 text-sm text-[#586779]"><Globe className="h-4 w-4" /> {website}</div> : null}
+        {/* Title Section */}
+        <section className="mb-12">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">{category || taskLabel}</p>
+              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em]">{post.title}</h1>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {website ? <a href={website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#e67e22] px-5 py-3 text-sm font-semibold text-white hover:bg-[#d35400] transition-colors">Visit website <ArrowRight className="h-4 w-4" /></a> : null}
+              <Link href={taskRoute} className="inline-flex items-center gap-2 rounded-full border-2 border-[#e67e22] bg-white px-5 py-3 text-sm font-semibold text-[#e67e22] hover:bg-[#fff8ef] transition-colors">Browse more</Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact & Location Section */}
+        <section className="mb-12">
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Contact & Location</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">Get in touch with us</h2>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white p-7 shadow-[0_20px_60px_rgba(16,40,58,0.06)]">
+              <div className="space-y-4">
+                {location ? (
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-full bg-[#e67e22] p-3">
+                      <MapPin className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Address</p>
+                      <p className="mt-1 text-sm text-[#10283a]">{location}</p>
+                    </div>
+                  </div>
+                ) : null}
+                {phone ? (
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-full bg-[#e67e22] p-3">
+                      <Phone className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Phone</p>
+                      <p className="mt-1 text-sm text-[#10283a]">{phone}</p>
+                    </div>
+                  </div>
+                ) : null}
+                {email ? (
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-full bg-[#e67e22] p-3">
+                      <Mail className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Email</p>
+                      <p className="mt-1 text-sm text-[#10283a]">{email}</p>
+                    </div>
+                  </div>
+                ) : null}
+                {website ? (
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-full bg-[#e67e22] p-3">
+                      <Globe className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Website</p>
+                      <a href={website} target="_blank" rel="noreferrer" className="mt-1 text-sm text-[#003049] hover:underline">{website}</a>
+                    </div>
+                  </div>
+                ) : null}
               </div>
               {detailFacts.length ? (
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -149,39 +164,104 @@ export function DirectoryTaskDetailPage({
                   ))}
                 </div>
               ) : null}
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                {website ? <a href={website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#003049] px-5 py-3 text-sm font-semibold text-white hover:bg-[#07283d]">Visit website <ArrowRight className="h-4 w-4" /></a> : null}
-                <Link href={taskRoute} className="inline-flex items-center gap-2 rounded-full border border-[rgba(16,40,58,0.12)] bg-white px-5 py-3 text-sm font-semibold text-[#10283a] hover:bg-[#f3e7d6]">Browse more</Link>
-              </div>
             </div>
-
             {mapEmbedUrl ? (
               <div className="overflow-hidden rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white shadow-[0_24px_60px_rgba(16,40,58,0.08)]">
-                <div className="border-b border-[rgba(16,40,58,0.12)] px-6 py-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Location</p>
-                </div>
-                <iframe src={mapEmbedUrl} title={`${post.title} map`} className="h-[320px] w-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <iframe src={mapEmbedUrl} title={`${post.title} map`} className="h-full min-h-[400px] w-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
               </div>
             ) : null}
-
-            <div className="rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white p-6 shadow-[0_24px_60px_rgba(16,40,58,0.08)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Quick trust cues</p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {['Clear contact details', 'Stronger business framing', 'Map and location cues', 'Related surfaces nearby'].map((item) => (
-                  <div key={item} className="rounded-[1.3rem] border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-4 text-sm text-[#10283a]">{item}</div>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 
+        {/* Working Hours Section */}
+        {typeof content.hours === 'string' && content.hours.trim() ? (
+          <section className="mb-12">
+            <div className="rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white p-7 shadow-[0_20px_60px_rgba(16,40,58,0.06)]">
+              <div className="flex items-center gap-3">
+                <div className="rounded-full bg-[#e67e22] p-2">
+                  <Clock className="h-5 w-5 text-white" />
+                </div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Working Hours</p>
+              </div>
+              <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">When we're open</h2>
+              <p className="mt-4 text-sm leading-8 text-[#586779]">{content.hours}</p>
+            </div>
+          </section>
+        ) : null}
+
+        {/* About Section */}
+        <section className="mb-12">
+          <div className="rounded-[2rem] border border-[rgba(16,40,58,0.12)] bg-white p-7 shadow-[0_20px_60px_rgba(16,40,58,0.06)]">
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-[#e67e22] p-2">
+                <ShieldCheck className="h-5 w-5 text-white" />
+              </div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">About {post.title}</p>
+            </div>
+            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">Learn more about our services</h2>
+            <p className="mt-4 text-sm leading-8 text-[#586779]">{description}</p>
+            {highlights.length ? (
+              <div className="mt-6 grid gap-3 md:grid-cols-2">
+                {highlights.slice(0, 4).map((item) => (
+                  <div key={item} className="flex items-start gap-3 rounded-[1.4rem] border border-[rgba(16,40,58,0.12)] bg-[#fff8ef] px-4 py-4 text-sm text-[#10283a]">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#e67e22]" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </section>
+
+        {/* Our Offerings Section */}
+        <section className="mb-12">
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Our Offerings</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">What we provide</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {offerings.map((offering, index) => (
+              <div key={index} className="rounded-[1.5rem] border border-[rgba(16,40,58,0.12)] bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="rounded-full bg-[#e67e22] p-3 w-fit">
+                  <CheckCircle2 className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-[#10283a]">{offering}</h3>
+                <p className="mt-2 text-sm text-[#586779]">Professional {offering.toLowerCase()} services tailored to your needs.</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+
+        {/* Gallery Section */}
+        {images.length > 1 ? (
+          <section className="mb-12">
+            <div className="mb-6">
+              <div className="flex items-center gap-3">
+                <div className="rounded-full bg-[#e67e22] p-2">
+                  <ImageIcon className="h-5 w-5 text-white" />
+                </div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Gallery</p>
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">Photo Gallery</h2>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {images.slice(1, 7).map((image, index) => (
+                <div key={image} className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[rgba(16,40,58,0.12)] bg-[#f7f3ec]">
+                  <ContentImage src={image} alt={`${post.title} gallery ${index + 1}`} fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {/* Related Listings Section */}
         {related.length ? (
-          <section className="mt-14">
+          <section className="mb-12">
             <div className="flex items-end justify-between gap-4 border-b border-[rgba(16,40,58,0.12)] pb-6">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Related surfaces</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Keep browsing nearby matches.</h2>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">Related Listings</p>
+                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Keep browsing nearby matches</h2>
               </div>
               <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(16,40,58,0.12)] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#6b7b8a]">
                 <Tag className="h-3.5 w-3.5" /> {taskLabel}

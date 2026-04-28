@@ -1,5 +1,7 @@
 import { siteIdentity } from '@/config/site.identity'
 import { siteTaskDefinitions, siteTaskViews } from '@/config/site.tasks'
+import { Key } from 'readline'
+import { Url } from 'url'
 
 export type TaskKey =
   | 'listing'
@@ -14,6 +16,9 @@ export type TaskKey =
   | 'comment'
 
 export type TaskConfig = {
+  icon: any
+  name: Key | null | undefined
+  href: Url
   key: TaskKey
   label: string
   route: string
