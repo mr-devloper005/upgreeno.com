@@ -3,6 +3,8 @@ import { ArrowRight, Globe, Mail, MapPin, Phone, ShieldCheck, Tag, Star, Message
 import { ContentImage } from '@/components/shared/content-image'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { TaskPostCard } from '@/components/shared/task-post-card'
+import { RichContent, formatRichHtml } from '@/components/shared/rich-content'
+import { ClickableImage } from '@/components/shared/clickable-image'
 import type { SitePost } from '@/lib/site-connector'
 import type { TaskKey } from '@/lib/site-config'
 
@@ -71,7 +73,7 @@ export function DirectoryTaskDetailPage({
         <section className="mb-12">
           <div className="overflow-hidden rounded-[2.2rem] border border-[rgba(16,40,58,0.12)] bg-white shadow-[0_24px_70px_rgba(16,40,58,0.08)]">
             <div className="relative h-[420px] overflow-hidden bg-[#eef3f6]">
-              <ContentImage src={images[0]} alt={post.title} fill className="object-cover" />
+              <ClickableImage src={images[0]} alt={post.title} allImages={images} index={0} fill className="object-cover" />
               <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
                 <span className="inline-flex items-center gap-1 rounded-full bg-[#003049] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#fffaf4]">
                   <Tag className="h-3.5 w-3.5" />
@@ -199,7 +201,7 @@ export function DirectoryTaskDetailPage({
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7b8a]">About {post.title}</p>
             </div>
             <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em]">Learn more about our services</h2>
-            <p className="mt-4 text-sm leading-8 text-[#586779]">{description}</p>
+            <RichContent html={formatRichHtml(description)} className="mt-4 text-sm leading-8 text-[#586779]" />
             {highlights.length ? (
               <div className="mt-6 grid gap-3 md:grid-cols-2">
                 {highlights.slice(0, 4).map((item) => (
@@ -247,8 +249,8 @@ export function DirectoryTaskDetailPage({
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {images.slice(1, 7).map((image, index) => (
-                <div key={image} className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[rgba(16,40,58,0.12)] bg-[#f7f3ec]">
-                  <ContentImage src={image} alt={`${post.title} gallery ${index + 1}`} fill className="object-cover" />
+                <div key={image} className="relative aspect-[4/3] cursor-pointer overflow-hidden rounded-[1.5rem] border border-[rgba(16,40,58,0.12)] bg-[#f7f3ec]">
+                  <ClickableImage src={image} alt={`${post.title} gallery ${index + 1}`} allImages={images} index={index + 1} fill className="object-cover" />
                 </div>
               ))}
             </div>
