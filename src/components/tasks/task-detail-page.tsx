@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { ArticleComments } from "@/components/tasks/article-comments";
 import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
 import { RichContent, formatRichHtml } from "@/components/shared/rich-content";
+import { ClickableImage } from "@/components/shared/clickable-image";
 import { getFactoryState } from "@/design/factory/get-factory-state";
 import { getProductKind } from "@/design/factory/get-product-kind";
 import { DirectoryTaskDetailPage } from "@/design/products/directory/task-detail-page";
@@ -308,10 +309,12 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   <p className="text-base leading-7 text-muted-foreground">{articleSummary}</p>
                 ) : null}
                 {images[0] ? (
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border bg-muted">
-                    <ContentImage
+                  <div className="relative aspect-[16/9] w-full cursor-pointer overflow-hidden rounded-3xl border border-border bg-muted">
+                    <ClickableImage
                       src={images[0]}
                       alt={`${post.title} featured image`}
+                      allImages={images}
+                      index={0}
                       fill
                       className="object-cover"
                       intrinsicWidth={1600}

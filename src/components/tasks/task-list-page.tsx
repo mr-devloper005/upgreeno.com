@@ -97,17 +97,31 @@ function HeaderBlock({
   if (layoutKey === 'listing-directory' || layoutKey === 'listing-showcase') {
     return (
       <section className={`mb-10 rounded-[2rem] p-7 shadow-[0_24px_70px_rgba(16,40,58,0.07)] lg:p-8 ${ui.panel}`}>
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(16,40,58,0.12)] bg-[#f3e7d6] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003049]">
-            <ShieldCheck className="h-3.5 w-3.5" />
-            Featured directory
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(16,40,58,0.12)] bg-[#f3e7d6] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#003049]">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              Featured directory
+            </div>
+            <div className="mt-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70">
+              <Icon className="h-4 w-4" />
+              {taskConfig?.label || task}
+            </div>
+            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
+            <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>Built for quicker scanning, stronger trust cues, and a structure designed for comparing businesses rather than browsing a generic feed.</p>
           </div>
-          <div className="mt-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70">
-            <Icon className="h-4 w-4" />
-            {taskConfig?.label || task}
+          <div className={`rounded-[2rem] p-6 ${ui.panel}`}>
+            <p className={`text-xs font-semibold uppercase tracking-[0.24em] ${ui.muted}`}>Filter by category</p>
+            <form className="mt-4 flex items-center gap-3" action={taskConfig?.route || '#'}>
+              <select name="category" defaultValue={category} className={`h-11 flex-1 rounded-xl px-3 text-sm ${ui.input}`}>
+                <option value="all">All categories</option>
+                {CATEGORY_OPTIONS.map((item) => (
+                  <option key={item.slug} value={item.slug}>{item.name}</option>
+                ))}
+              </select>
+              <button type="submit" className={`h-11 rounded-xl px-4 text-sm font-semibold ${ui.button}`}>Apply</button>
+            </form>
           </div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-          <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>Built for quicker scanning, stronger trust cues, and a structure designed for comparing businesses rather than browsing a generic feed.</p>
         </div>
       </section>
     )

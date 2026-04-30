@@ -20,10 +20,15 @@ const sanitizeRichHtml = (html: string) =>
 export const formatRichHtml = (raw?: string | null, fallback = "Details coming soon.") => {
   const source = typeof raw === "string" ? raw.trim() : "";
   if (!source) return `<p>${escapeHtml(fallback)}</p>`;
-  if (/<[a-z][\s\S]*>/i.test(source)) {
+  
+  // Check if source contains HTML tags (more comprehensive regex)
+  const hasHtml = /<[a-z][^>]*>|<\/[a-z][^>]*>/i.test(source);
+  
+  if (hasHtml) {
     return sanitizeRichHtml(source);
   }
 
+  // Treat as plain text - wrap paragraphs in p tags
   return source
     .split(/\n{2,}/)
     .map((paragraph) => `<p>${escapeHtml(paragraph.replace(/\n/g, " ").trim())}</p>`)
