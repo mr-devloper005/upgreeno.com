@@ -111,10 +111,6 @@ export default async function HomePage() {
           <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
             <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
               <div>
-                <div className="brand-chip mb-5 w-fit">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  Curated business directory
-                </div>
                 <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.06em] sm:text-6xl lg:text-7xl">
                   A polished home for brands, listings, and local discovery.
                 </h1>

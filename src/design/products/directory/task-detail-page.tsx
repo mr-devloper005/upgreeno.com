@@ -40,8 +40,6 @@ export function DirectoryTaskDetailPage({
     typeof content.teamSize === 'string' || typeof content.teamSize === 'number' ? { label: 'Team size', value: String(content.teamSize) } : null,
     typeof content.priceRange === 'string' ? { label: 'Price range', value: content.priceRange } : null,
     typeof content.hours === 'string' ? { label: 'Hours', value: content.hours } : null,
-    typeof content.rating === 'string' || typeof content.rating === 'number' ? { label: 'Rating', value: String(content.rating) } : null,
-    typeof content.reviewsCount === 'string' || typeof content.reviewsCount === 'number' ? { label: 'Reviews', value: String(content.reviewsCount) } : null,
   ].filter((item): item is { label: string; value: string } => Boolean(item))
   const specialtyChips = [
     ...(Array.isArray(content.specialties) ? content.specialties : []),

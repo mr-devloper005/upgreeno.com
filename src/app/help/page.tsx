@@ -6,9 +6,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { mockFaqs } from '@/data/mock-data'
 
 const topics = [
-  { title: 'Getting Started', description: 'Create your account and publish your first post.' },
-  { title: 'Bookmarks & Collections', description: 'Save links, organize folders, and share collections.' },
-  { title: 'Listings & Ads', description: 'Manage your business listings and classifieds.' },
+  { title: 'Business Listings', description: 'Create, edit, and manage your business directory listings.' },
+  { title: 'Directory Search', description: 'Find businesses, services, and local listings efficiently.' },
+  { title: 'Account Management', description: 'Update your profile, settings, and saved listings.' },
 ]
 
 export default function HelpPage() {
@@ -16,11 +16,7 @@ export default function HelpPage() {
     <PageShell
       title="Help Center"
       description="Find answers, guides, and best practices."
-      actions={
-        <Button asChild>
-          <Link href="/contact">Contact Support</Link>
-        </Button>
-      }
+      actions={null}
     >
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="grid gap-6 md:grid-cols-2">
