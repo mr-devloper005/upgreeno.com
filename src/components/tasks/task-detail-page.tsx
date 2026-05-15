@@ -174,8 +174,6 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
     typeof contentAny.teamSize === "string" || typeof contentAny.teamSize === "number" ? { label: "Team size", value: String(contentAny.teamSize) } : null,
     typeof contentAny.priceRange === "string" && contentAny.priceRange.trim() ? { label: "Price range", value: contentAny.priceRange } : null,
     typeof contentAny.hours === "string" && contentAny.hours.trim() ? { label: "Hours", value: contentAny.hours } : null,
-    typeof contentAny.rating === "string" || typeof contentAny.rating === "number" ? { label: "Rating", value: String(contentAny.rating) } : null,
-    typeof contentAny.reviewsCount === "string" || typeof contentAny.reviewsCount === "number" ? { label: "Reviews", value: String(contentAny.reviewsCount) } : null,
   ].filter((item): item is { label: string; value: string } => Boolean(item));
   const specialtyChips = [
     ...(Array.isArray(contentAny.specialties) ? contentAny.specialties : []),
